@@ -79,4 +79,118 @@ UnitTest.test('MergeOperationsTest', function () {
     ],
     { startRow: 2, startCol: 0, finishRow: 3, finishCol: 0 }
   );
+
+  Assertions.checkMerge(
+    'SimpleCase - merging textnodes should move all content into the first cell separarted by BRs',
+    // Border = 1 would be here, but it is removed so that we can assert html
+    '<table style="border-collapse: collapse;">' +
+      '<tbody>' +
+        '<tr>' +
+          '<td scope="rowgroup" rowspan="2">A1<br>A2<br></td>' +
+          '<td>B1</td>' +
+          '<td>C1</td>' +
+        '</tr>' +
+        '<tr>' +
+          '<td>B2</td>' +
+          '<td>C2</td>' +
+        '</tr>' +
+      '</tbody>' +
+    '</table>',
+
+    '<table border="1" style="border-collapse: collapse;">' +
+      '<tbody>' +
+        '<tr>' +
+          '<td scope="row">A1</td>' +
+          '<td>B1</td>' +
+          '<td>C1</td>' +
+        '</tr>' +
+        '<tr>' +
+          '<td>A2</td>' +
+          '<td>B2</td>' +
+          '<td>C2</td>' +
+        '</tr>' +
+      '</tbody>' +
+    '</table>',
+    [
+      { section: 0, row: 0, column: 0 },
+      { section: 0, row: 1, column: 0 }
+    ],
+    { startRow: 0, startCol: 0, finishRow: 1, finishCol: 0 }
+  );
+
+  Assertions.checkMerge(
+    'SimpleCase - merging textnodes should move all content into the first cell separarted by BRs',
+    // Border = 1 would be here, but it is removed so that we can assert html
+    '<table style="border-collapse: collapse;">' +
+      '<tbody>' +
+        '<tr>' +
+          '<td scope="colgroup" rowspan="2">A1<br>A2<br></td>' +
+          '<td>B1</td>' +
+          '<td>C1</td>' +
+        '</tr>' +
+        '<tr>' +
+          '<td>B2</td>' +
+          '<td>C2</td>' +
+        '</tr>' +
+      '</tbody>' +
+    '</table>',
+
+    '<table border="1" style="border-collapse: collapse;">' +
+      '<tbody>' +
+        '<tr>' +
+          '<td scope="row">A1</td>' +
+          '<td>B1</td>' +
+          '<td>C1</td>' +
+        '</tr>' +
+        '<tr>' +
+          '<td scope="col">A2</td>' +
+          '<td>B2</td>' +
+          '<td>C2</td>' +
+        '</tr>' +
+      '</tbody>' +
+    '</table>',
+    [
+      { section: 0, row: 0, column: 0 },
+      { section: 0, row: 1, column: 0 }
+    ],
+    { startRow: 0, startCol: 0, finishRow: 1, finishCol: 0 }
+  );
+
+  Assertions.checkMerge(
+    'SimpleCase - merging textnodes should move all content into the first cell separarted by BRs',
+    // Border = 1 would be here, but it is removed so that we can assert html
+    '<table style="border-collapse: collapse;">' +
+      '<tbody>' +
+        '<tr>' +
+          '<td scope="colgroup" rowspan="2">A1<br>A2<br></td>' +
+          '<td>B1</td>' +
+          '<td>C1</td>' +
+        '</tr>' +
+        '<tr>' +
+          '<td>B2</td>' +
+          '<td>C2</td>' +
+        '</tr>' +
+      '</tbody>' +
+    '</table>',
+
+    '<table border="1" style="border-collapse: collapse;">' +
+      '<tbody>' +
+        '<tr>' +
+          '<td scope="col">A1</td>' +
+          '<td>B1</td>' +
+          '<td>C1</td>' +
+        '</tr>' +
+        '<tr>' +
+          '<td scope="row">A2</td>' +
+          '<td>B2</td>' +
+          '<td>C2</td>' +
+        '</tr>' +
+      '</tbody>' +
+    '</table>',
+    [
+      { section: 0, row: 0, column: 0 },
+      { section: 0, row: 1, column: 0 }
+    ],
+    { startRow: 0, startCol: 0, finishRow: 1, finishCol: 0 }
+  );
 });
